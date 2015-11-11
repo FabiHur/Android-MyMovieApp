@@ -15,8 +15,18 @@ import android.widget.TextView;
 import com.fabihur.android.mymovieapp.utils.MovieUtils;
 import com.squareup.picasso.Picasso;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 
 public class DetailActivityFragment extends Fragment {
+
+    @Bind(R.id.movie_title_text_view) TextView movieTitleTextView;
+    @Bind(R.id.release_date_text_view) TextView releaseDateTextView;
+    @Bind(R.id.user_rating_text_view) TextView usrRatingTextView;
+    @Bind(R.id.movie_overview_text_view) TextView overviewTextView;
+    @Bind(R.id.movie_poster_image_view) ImageView posterImageView;
+
 
     public DetailActivityFragment() {
     }
@@ -28,25 +38,20 @@ public class DetailActivityFragment extends Fragment {
         View detailView = inflater.inflate(R.layout.fragment_detail, container, false);
 
         if(intent != null){
+            ButterKnife.bind(this, detailView);
 
-            String userRating = intent.getStringExtra(MovieUtils.USER_RATING);
-            String releaseDate = (intent.getStringExtra(MovieUtils.RELEASE_DATE)).substring(0,4);
+            Movie selectedMovie = intent.getExtras().getParcelable(MovieUtils.MOVIE);
 
-            ((TextView)detailView.findViewById(R.id.movie_title_text_view))
-                    .setText(intent.getStringExtra(MovieUtils.ORIGINAL_TITLE));
-            ((TextView)detailView.findViewById(R.id.release_date_text_view))
-                    .setText(releaseDate);
-            ((TextView)detailView.findViewById(R.id.user_rating_text_view))
-                    .setText(userRating + getString(R.string.rating_max));
-            ((TextView)detailView.findViewById(R.id.movie_overview_text_view))
-                    .setText(intent.getStringExtra(MovieUtils.OVERVIEW));
+            movieTitleTextView.setText(selectedMovie.getOriginalTitle());
+            releaseDateTextView.setText(selectedMovie.getReleaseDate().substring(0, 4));
+            usrRatingTextView.setText(selectedMovie.getUserRating() + getString(R.string.rating_max));
+            overviewTextView.setText(selectedMovie.getOverview());
 
-            String poster = intent.getStringExtra(MovieUtils.POSTER_PATH);
             String path = getString(R.string.poster_base_path);
 
-            ImageView posterImageView =
-                    (ImageView)detailView.findViewById(R.id.movie_poster_image_view);
-            Picasso.with(getActivity()).load(path+poster).into(posterImageView);
+            Picasso.with(getActivity())
+                    .load(path + selectedMovie.getPoster())
+                    .into(posterImageView);
         }
         return detailView;
     }

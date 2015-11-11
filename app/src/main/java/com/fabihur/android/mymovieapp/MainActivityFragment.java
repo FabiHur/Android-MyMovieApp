@@ -56,11 +56,8 @@ public class MainActivityFragment extends Fragment {
                     Movie movie = movieAdapter.getItem(position);
 
                     Intent detailIntent = new Intent(getActivity(), DetailActivity.class);
-                    detailIntent.putExtra(MovieUtils.ORIGINAL_TITLE, movie.getOriginalTitle());
-                    detailIntent.putExtra(MovieUtils.POSTER_PATH, movie.getPoster());
-                    detailIntent.putExtra(MovieUtils.RELEASE_DATE, movie.getReleaseDate());
-                    detailIntent.putExtra(MovieUtils.USER_RATING, movie.getUserRating());
-                    detailIntent.putExtra(MovieUtils.OVERVIEW, movie.getOverview());
+                    detailIntent.putExtra(MovieUtils.MOVIE, movie);
+
                     startActivity(detailIntent);
                 }
             }
@@ -155,6 +152,7 @@ public class MainActivityFragment extends Fragment {
             JSONArray jsonArray = jsonObj.getJSONArray(MovieUtils.RESULTS);
 
             for(int i=0;i < jsonArray.length(); i++){
+
                 Movie movie = new Movie();
                 JSONObject jsonMovie = jsonArray.getJSONObject(i);
 

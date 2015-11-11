@@ -9,4 +9,5 @@
     <string name="rating_max">/10</string>
     <string name="movie_duration">120min</string>
     <string name="poster_content_desc">Movie Poster</string>
+
 </resources>

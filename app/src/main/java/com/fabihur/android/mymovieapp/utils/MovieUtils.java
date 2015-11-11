@@ -5,6 +5,7 @@ package com.fabihur.android.mymovieapp.utils;
 
 public class MovieUtils {
 
+    public static final String MOVIE = "movie";
     public static final String RESULTS = "results";
     public static final String ORIGINAL_TITLE = "original_title";
     public static final String POSTER_PATH = "poster_path";
